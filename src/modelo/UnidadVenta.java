@@ -95,4 +95,19 @@ public abstract class UnidadVenta {
 	public boolean equals(UnidadVenta unidadVenta) {
 		return this.getCodigo().equalsIgnoreCase(unidadVenta.getCodigo());
 	}
+	
+	//CASO DE USO 2 - Localizar cualquier entidad del sistema.
+	public Plato traerPlato(int idPlato) {
+		Plato p = null;
+		int i = 0;
+		
+		while(i < this.lstPlatos.size() && p == null) {
+			if(this.lstPlatos.get(i).getIdPlato() == idPlato) {
+				p = this.lstPlatos.get(i);
+			}
+			i++;
+		}
+		
+		return p;
+	}
 }

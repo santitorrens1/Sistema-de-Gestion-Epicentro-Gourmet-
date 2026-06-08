@@ -86,4 +86,20 @@ public class Festival {
 	public boolean equals(Festival festival) {
 		return this.getNombre().equalsIgnoreCase(festival.getNombre());
 	}
+	
+	//CASO DE USO 2 - Localizar cualquier entidad del sistema.
+	public Costo traerCosto(int idCosto) {
+		Costo c = null;
+		int i = 0;
+		
+		while(i < this.lstCostos.size() && c == null) {
+			if(this.lstCostos.get(i).getIdCosto() == idCosto) {
+				c = this.lstCostos.get(i);
+			}
+			i++;
+		}
+		
+		return c;
+	}
+	
 }

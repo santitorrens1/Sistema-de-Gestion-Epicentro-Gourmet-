@@ -25,6 +25,7 @@ public abstract class Personal {
 		this.tipo = tipo;
 		this.sueldoBase = sueldoBase;
 	}
+	
 	public int getIdPersonal() {
 		return idPersonal;
 	}

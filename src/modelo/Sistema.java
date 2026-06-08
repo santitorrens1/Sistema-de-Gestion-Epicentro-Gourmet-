@@ -12,10 +12,10 @@ public class Sistema {
 	private List<Personal> lstPersonal;
 
 	public Sistema() {
-		List<Festival> lstFestivales = new ArrayList<Festival>();
-		List<UnidadVenta> lstUnidades = new ArrayList<UnidadVenta>();
-		List<Pedido> lstPedidos = new ArrayList<Pedido>();
-		List<Personal> lstPersonal = new ArrayList<Personal>();
+		this.lstFestivales = new ArrayList<Festival>();
+		this.lstUnidades = new ArrayList<UnidadVenta>();
+		this.lstPedidos = new ArrayList<Pedido>();
+		this.lstPersonal = new ArrayList<Personal>();
 	}
 
 	public List<Festival> getLstFestivales() {
@@ -89,7 +89,7 @@ public class Sistema {
 		int i = 0;
 		boolean eliminado = false;
 
-		while(i < this.lstFestivales.size() && eliminado == true) {
+		while(i < this.lstFestivales.size() && eliminado == false) {
 			if(this.lstFestivales.get(i).getIdFestival() == idFestival) {
 				this.lstFestivales.remove(i);
 				eliminado = true;
@@ -104,7 +104,7 @@ public class Sistema {
 		int i = 0;
 		boolean eliminado = false;
 
-		while(i < this.lstUnidades.size() && eliminado == true) {
+		while(i < this.lstUnidades.size() && eliminado == false) {
 			if(this.lstUnidades.get(i).getIdUnidadVenta() == idFoodTruck && this.lstUnidades.get(i) instanceof FoodTruck) {
 				this.lstUnidades.remove(i);
 				eliminado = true;
@@ -113,13 +113,13 @@ public class Sistema {
 		}
 		return eliminado;
 	}
-	
+
 	public boolean eliminarPuestoDesarmable(int idPuestoDesarmable) {
 
 		int i = 0;
 		boolean eliminado = false;
 
-		while(i < this.lstUnidades.size() && eliminado == true) {
+		while(i < this.lstUnidades.size() && eliminado == false) {
 			if(this.lstUnidades.get(i).getIdUnidadVenta() == idPuestoDesarmable && this.lstUnidades.get(i) instanceof PuestoDesarmable) {
 				this.lstUnidades.remove(i);
 				eliminado = true;
@@ -128,12 +128,12 @@ public class Sistema {
 		}
 		return eliminado;
 	}
-	
+
 	public boolean eliminarCajero(int idCajero) {
 		int i = 0;
 		boolean eliminado = false;
-		
-		while(i < this.lstPersonal.size() && eliminado == true) {
+
+		while(i < this.lstPersonal.size() && eliminado == false) {
 			if(this.lstPersonal.get(i).getIdPersonal() == idCajero && this.lstPersonal.get(i) instanceof Cajero) {
 				this.lstPersonal.remove(i);
 				eliminado = true;
@@ -142,12 +142,12 @@ public class Sistema {
 		}
 		return eliminado;
 	}
-	
+
 	public boolean eliminarCocinero(int idCocinero) {
 		int i = 0;
 		boolean eliminado = false;
-		
-		while(i < this.lstPersonal.size() && eliminado == true) {
+
+		while(i < this.lstPersonal.size() && eliminado == false) {
 			if(this.lstPersonal.get(i).getIdPersonal() == idCocinero && this.lstPersonal.get(i) instanceof Cocinero) {
 				this.lstPersonal.remove(i);
 				eliminado = true;
@@ -156,7 +156,95 @@ public class Sistema {
 		}
 		return eliminado;
 	}
-	
-	
 
+	//CASO DE USO 2 - Localizar cualquier entidad del sistema. Personal se busca por DNI, Unidad por código.
+
+	public Cajero traerCajero(int idCajero) {
+
+		Cajero c = null;
+		int i = 0;
+
+		while(i < this.lstPersonal.size() && c == null) {
+			if(this.lstPersonal.get(i).getIdPersonal() == idCajero && this.lstPersonal.get(i) instanceof Cajero) {
+				c = (Cajero) this.lstPersonal.get(i);
+			}
+			i++;
+		}
+
+		return c;
+	}
+
+	public Cocinero traerCocinero(int idCocinero) {
+
+		Cocinero c = null;
+		int i = 0;
+
+		while(i < this.lstPersonal.size() && c == null) {
+			if(this.lstPersonal.get(i).getIdPersonal() == idCocinero && this.lstPersonal.get(i) instanceof Cocinero) {
+				c = (Cocinero) this.lstPersonal.get(i);
+			}
+			i++;
+		}
+
+		return c;
+	}
+
+	public FoodTruck traerFoodTruck(int idFoodTruck) {
+
+		FoodTruck f = null;
+		int i = 0;
+
+		while(i < this.lstUnidades.size() && f == null) {
+			if(this.lstUnidades.get(i).getIdUnidadVenta() == idFoodTruck && this.lstUnidades.get(i) instanceof FoodTruck) {
+				f = (FoodTruck) this.lstUnidades.get(i);
+			}
+			i++;
+		}
+
+		return f;
+	}
+
+	public PuestoDesarmable traerPuestoDesarmable(int idPuestoDesarmable) {
+
+		PuestoDesarmable p = null;
+		int i = 0;
+
+		while(i < this.lstUnidades.size() && p == null) {
+			if(this.lstUnidades.get(i).getIdUnidadVenta() == idPuestoDesarmable && this.lstUnidades.get(i) instanceof PuestoDesarmable) {
+				p = (PuestoDesarmable) this.lstUnidades.get(i);
+			}
+			i++;
+		}
+
+		return p;
+	}
+	
+	public Pedido traerPedido(int idPedido) {
+		Pedido p = null;
+		int i = 0;
+		
+		while(i < this.lstPedidos.size() && p == null) {
+			if(this.lstPedidos.get(i).getIdPedido() == idPedido) {
+				p = this.lstPedidos.get(i);
+			}
+			i++;
+		}
+		
+		return p;
+	}
+	
+	public Festival traerFestival(int idFestival) {
+		
+		Festival f = null;
+		int i = 0;
+		
+		while(i < this.lstFestivales.size() && f == null) {
+			if(this.lstFestivales.get(i).getIdFestival() == idFestival) {
+				f = this.lstFestivales.get(i);
+			}
+			i++;
+		}
+		
+		return f;
+	}
 }
