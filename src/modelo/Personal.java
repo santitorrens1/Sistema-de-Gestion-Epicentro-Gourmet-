@@ -3,12 +3,16 @@ package modelo;
 import java.time.LocalDate;
 
 public abstract class Personal {
-	@Override
-	public String toString() {
-		return "Personal [idPersonal=" + idPersonal + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
-				+ ", fechaNac=" + fechaNac + ", fechaIng=" + fechaIng + ", tipo=" + tipo + ", sueldoBase=" + sueldoBase
-				+ "]";
-	}
+
+	protected int idPersonal;
+	protected String nombre;
+	protected String apellido;
+	protected int dni;
+	protected LocalDate fechaNac;
+	protected LocalDate fechaIng;
+	protected String tipo;
+	protected float sueldoBase;
+
 	public Personal(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
 			String tipo, float sueldoBase) {
 		super();
@@ -69,12 +73,15 @@ public abstract class Personal {
 	public void setSueldoBase(float sueldoBase) {
 		this.sueldoBase = sueldoBase;
 	}
-	protected int idPersonal;
-	protected String nombre;
-	protected String apellido;
-	protected int dni;
-	protected LocalDate fechaNac;
-	protected LocalDate fechaIng;
-	protected String tipo;
-	protected float sueldoBase;
+
+	@Override
+	public String toString() {
+		return "Personal [idPersonal=" + idPersonal + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", fechaNac=" + fechaNac + ", fechaIng=" + fechaIng + ", tipo=" + tipo + ", sueldoBase=" + sueldoBase
+				+ "]";
+	}
+	
+	public boolean equals(Personal personal) {
+		return this.getDni() == personal.getDni();
+	}
 }

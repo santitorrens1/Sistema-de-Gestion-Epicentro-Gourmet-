@@ -1,19 +1,19 @@
 package modelo;
 
 public class Plato {
-@Override
-	public String toString() {
-		return "Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", costroProd="
-				+ costroProd + "]";
-	}
-public Plato(int idPlato, String nombre, float precioVenta, float costroProd) {
+	private int idPlato;
+	private String nombre;
+	private float precioVenta;
+	private float costroProd;
+
+	public Plato(int idPlato, String nombre, float precioVenta, float costroProd) {
 		super();
 		this.idPlato = idPlato;
 		this.nombre = nombre;
 		this.precioVenta = precioVenta;
 		this.costroProd = costroProd;
 	}
-public int getIdPlato() {
+	public int getIdPlato() {
 		return idPlato;
 	}
 	public void setIdPlato(int idPlato) {
@@ -37,8 +37,15 @@ public int getIdPlato() {
 	public void setCostroProd(float costroProd) {
 		this.costroProd = costroProd;
 	}
-private int idPlato;
-private String nombre;
-private float precioVenta;
-private float costroProd;
+
+	@Override
+	public String toString() {
+		return "Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", costroProd="
+				+ costroProd + "]";
+	}
+	
+	public boolean equals(Plato plato) {
+		return this.getNombre().equalsIgnoreCase(plato.getNombre());
+	}
+	
 }

@@ -1,18 +1,19 @@
 package modelo;
 
 public class DetallePedidoPlato {
-@Override
-	public String toString() {
-		return "DetallePedidoPlato [idDetallePedido=" + idDetallePedido + ", plato=" + plato + ", cantidad=" + cantidad
-				+ "]";
-	}
-public DetallePedidoPlato(int idDetallePedido, Plato plato, int cantidad) {
+
+	private int idDetallePedido;
+	private Plato plato;
+	private int cantidad;
+	
+	public DetallePedidoPlato(int idDetallePedido, Plato plato, int cantidad) {
 		super();
 		this.idDetallePedido = idDetallePedido;
 		this.plato = plato;
 		this.cantidad = cantidad;
 	}
-public int getIdDetallePedido() {
+	
+	public int getIdDetallePedido() {
 		return idDetallePedido;
 	}
 	public void setIdDetallePedido(int idDetallePedido) {
@@ -30,7 +31,14 @@ public int getIdDetallePedido() {
 	public void setCantidad(int cantidad) {
 		this.cantidad = cantidad;
 	}
-private int idDetallePedido;
-private Plato plato;
-private int cantidad;
+	
+	@Override
+	public String toString() {
+		return "DetallePedidoPlato [idDetallePedido=" + idDetallePedido + ", plato=" + plato + ", cantidad=" + cantidad
+				+ "]";
+	}
+	
+	public boolean equals(DetallePedidoPlato detallePedidoPlato) {
+		return this.getIdDetallePedido() == detallePedidoPlato.getIdDetallePedido();
+	}
 }
