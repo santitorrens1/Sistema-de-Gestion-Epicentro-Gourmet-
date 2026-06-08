@@ -3,9 +3,9 @@ package modelo;
 import java.time.LocalDate;
 
 public class Cajero extends Personal{
-public Cajero(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase, int idCajero, String turno, boolean estado) {
-		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo, sueldoBase);
+public Cajero(int idCajero, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
+			String tipo, float sueldoBase, String turno, boolean estado) throws Exception {
+		super(idCajero, nombre, apellido, dni, fechaNac, fechaIng, tipo, sueldoBase);
 		this.idCajero = idCajero;
 		this.turno = turno;
 		this.estado = estado;

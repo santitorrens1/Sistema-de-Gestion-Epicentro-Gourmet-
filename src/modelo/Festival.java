@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Festival {
@@ -10,16 +11,15 @@ public class Festival {
 				+ ", fechaInicio=" + fechaInicio + ", fechaFin=" + fechaFin + ", lstCostos=" + lstCostos
 				+ ", lstUnidadesVenta=" + lstUnidadesVenta + ", estado=" + estado + "]";
 	}
-public Festival(int idFestival, String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin,
-			List<Costo> lstCostos, List<UnidadVenta> lstUnidadesVenta, boolean estado) {
+public Festival(int idFestival, String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin,boolean estado) {
 		super();
 		this.idFestival = idFestival;
 		this.nombre = nombre;
 		this.temporada = temporada;
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
-		this.lstCostos = lstCostos;
-		this.lstUnidadesVenta = lstUnidadesVenta;
+		this.lstCostos= new ArrayList<Costo>();
+		this.lstUnidadesVenta= new ArrayList<UnidadVenta>();
 		this.estado = estado;
 	}
 public int getIdFestival() {

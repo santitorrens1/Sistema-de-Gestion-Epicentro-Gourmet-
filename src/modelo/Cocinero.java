@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 public class Cocinero extends Personal {
 
-public Cocinero(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase, int idCocinero, String especialidadCulinaria, float plusCategoria,
-			boolean estado) {
-		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo, sueldoBase);
+public Cocinero(int idCocinero, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
+			String tipo, float sueldoBase, String especialidadCulinaria, float plusCategoria,
+			boolean estado)throws Exception {
+		super(idCocinero, nombre, apellido, dni, fechaNac, fechaIng, tipo, sueldoBase);
 		this.idCocinero = idCocinero;
 		this.especialidadCulinaria = especialidadCulinaria;
 		this.plusCategoria = plusCategoria;

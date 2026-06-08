@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PuestoDesarmable extends UnidadVenta {
@@ -9,17 +10,14 @@ public class PuestoDesarmable extends UnidadVenta {
 				+ ", tiempoMontaje=" + tiempoMontaje + ", lstPersonal=" + lstPersonal + ", lstPlatosOfrecidos="
 				+ lstPlatosOfrecidos + "]";
 	}
-public PuestoDesarmable(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
-			String codigo, List<Plato> lstPlatos, List<Personal> lstPersonal, List<Pedido> lstPedidos, boolean estado,
-			int idPuestoDesarmable, int cantCarpas, int tiempoMontaje, List<Personal> lstPersonal2,
-			List<Plato> lstPlatosOfrecidos) {
-		super(idUnidadVenta, nombreComercial, responsable, superficieMt2, codigo, lstPlatos, lstPersonal, lstPedidos,
-				estado);
+public PuestoDesarmable(int idPuestoDesarmable, String nombreComercial, Personal responsable, float superficieMt2,
+			String codigo, boolean estado,int cantCarpas, int tiempoMontaje) throws Exception{
+		super(idPuestoDesarmable, nombreComercial, responsable, superficieMt2, codigo,estado);
 		this.idPuestoDesarmable = idPuestoDesarmable;
 		this.cantCarpas = cantCarpas;
 		this.tiempoMontaje = tiempoMontaje;
-		lstPersonal = lstPersonal2;
-		this.lstPlatosOfrecidos = lstPlatosOfrecidos;
+		this.lstPersonal = new ArrayList<Personal>();
+		this.lstPlatosOfrecidos = new ArrayList<Plato>();
 	}
 public int getIdPuestoDesarmable() {
 		return idPuestoDesarmable;

@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public abstract class Personal {
 	@Override
@@ -10,13 +11,13 @@ public abstract class Personal {
 				+ "]";
 	}
 	public Personal(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase) {
+			String tipo, float sueldoBase) throws Exception{
 		super();
 		this.idPersonal = idPersonal;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
-		this.fechaNac = fechaNac;
+		setFechaNac(fechaNac);
 		this.fechaIng = fechaIng;
 		this.tipo = tipo;
 		this.sueldoBase = sueldoBase;
@@ -48,8 +49,11 @@ public abstract class Personal {
 	public LocalDate getFechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setFechaNac(LocalDate fechaNac)throws Exception {
+		if(Period.between(fechaNac, LocalDate.now()).getYears() < 18)
+	        throw new Exception("El personal debe ser mayor de edad");
+	    this.fechaNac = fechaNac;
+		
 	}
 	public LocalDate getFechaIng() {
 		return fechaIng;

@@ -1,5 +1,6 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodTruck extends UnidadVenta{
@@ -8,17 +9,14 @@ public class FoodTruck extends UnidadVenta{
 		return super.toString() + "FoodTruck [idFoodTruck=" + idFoodTruck + ", patente=" + patente + ", electricidad=" + electricidad
 				+ ", lstPersonal=" + lstPersonal + ", lstPlatosOfrecidos=" + lstPlatosOfrecidos + "]";
 	}
-public FoodTruck(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
-			String codigo, List<Plato> lstPlatos, List<Personal> lstPersonal, List<Pedido> lstPedidos, boolean estado,
-			int idFoodTruck, String patente, boolean electricidad, List<Personal> lstPersonal2,
-			List<Plato> lstPlatosOfrecidos) {
-		super(idUnidadVenta, nombreComercial, responsable, superficieMt2, codigo, lstPlatos, lstPersonal, lstPedidos,
-				estado);
+public FoodTruck(int idFoodTruck, String nombreComercial, Personal responsable, float superficieMt2,
+			String codigo,  boolean estado, String patente, boolean electricidad) throws Exception{
+		super(idFoodTruck,nombreComercial, responsable, superficieMt2, codigo,estado);
 		this.idFoodTruck = idFoodTruck;
 		this.patente = patente;
 		this.electricidad = electricidad;
-		lstPersonal = lstPersonal2;
-		this.lstPlatosOfrecidos = lstPlatosOfrecidos;
+		this.lstPersonal = new ArrayList<Personal>();
+		this.lstPlatosOfrecidos = new ArrayList<Plato>();
 	}
 public int getIdFoodTruck() {
 		return idFoodTruck;
