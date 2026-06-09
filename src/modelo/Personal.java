@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public abstract class Personal {
 
@@ -14,7 +15,7 @@ public abstract class Personal {
 	protected float sueldoBase;
 
 	public Personal(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase) {
+			String tipo) {
 		super();
 		this.idPersonal = idPersonal;
 		this.nombre = nombre;
@@ -23,7 +24,7 @@ public abstract class Personal {
 		this.fechaNac = fechaNac;
 		this.fechaIng = fechaIng;
 		this.tipo = tipo;
-		this.sueldoBase = sueldoBase;
+		this.sueldoBase = 100000.f;
 	}
 	
 	public int getIdPersonal() {
@@ -84,5 +85,15 @@ public abstract class Personal {
 	
 	public boolean equals(Personal personal) {
 		return this.getDni() == personal.getDni();
+	}
+	
+	// CU 4 
+	public abstract float liquidarHaberes();
+	
+	public int calcularAntiguedad() {
+		LocalDate fechaInicio = this.getFechaIng();
+		LocalDate fechaFin = LocalDate.now();
+		
+		return Period.between(fechaInicio, fechaFin).getYears();
 	}
 }

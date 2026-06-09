@@ -1,6 +1,7 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
@@ -12,14 +13,12 @@ public class Pedido {
 	private List<DetallePedidoPlato> lstDetalles;
 
 
-	public Pedido(int idPedido, LocalDate fecha, Festival festival, UnidadVenta unidadVenta,
-			List<DetallePedidoPlato> lstDetalles) {
-		super();
+	public Pedido(int idPedido, LocalDate fecha, Festival festival, UnidadVenta unidadVenta) {
 		this.idPedido = idPedido;
 		this.fecha = fecha;
 		this.festival = festival;
 		this.unidadVenta = unidadVenta;
-		this.lstDetalles = lstDetalles;
+		this.lstDetalles = new ArrayList<DetallePedidoPlato>();
 	}
 	
 	public int getIdPedido() {

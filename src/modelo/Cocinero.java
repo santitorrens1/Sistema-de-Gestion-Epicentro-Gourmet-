@@ -9,9 +9,9 @@ public class Cocinero extends Personal {
 	private boolean estado;
 
 	public Cocinero(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase, String especialidadCulinaria, float plusCategoria,
+			String tipo , String especialidadCulinaria, float plusCategoria,
 			boolean estado) {
-		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo, sueldoBase);
+		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo);
 		this.especialidadCulinaria = especialidadCulinaria;
 		this.plusCategoria = plusCategoria;
 		this.estado = estado;
@@ -45,5 +45,12 @@ public class Cocinero extends Personal {
 	
 	public boolean equals(Cocinero cocinero) {
 		return super.equals(cocinero);
+	}
+
+	//CU 4 - Cocinero: Sueldo Base ($100.000) + Plus por Categoría
+	@Override
+	public float liquidarHaberes() {
+		float sueldo = this.getSueldoBase() + this.getPlusCategoria();
+		return sueldo;
 	}
 }

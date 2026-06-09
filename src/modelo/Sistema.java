@@ -35,7 +35,7 @@ public class Sistema {
 	}
 
 
-	//CASO DE USO 1 - Métodos para agregar y eliminar festivales, unidades y personal de las listas de la clase Sistema.
+	//CU 1 - Métodos para agregar y eliminar festivales, unidades y personal de las listas de la clase Sistema.
 
 	public boolean agregarFestival(String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin,  boolean estado) {
 
@@ -69,7 +69,7 @@ public class Sistema {
 
 		int id = this.lstPersonal.isEmpty() ? 1 : this.lstPersonal.get(this.lstPersonal.size() - 1).getIdPersonal() + 1;
 
-		Personal ca = new Cajero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, sueldoBase, turno, estado);
+		Personal ca = new Cajero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, turno, estado);
 
 		return this.lstPersonal.add(ca);
 	}
@@ -79,7 +79,7 @@ public class Sistema {
 
 		int id = this.lstPersonal.isEmpty() ? 1 : this.lstPersonal.get(this.lstPersonal.size() - 1).getIdPersonal() + 1;
 
-		Personal co = new Cocinero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, sueldoBase, especialidadCulinaria, plusCategoria, estado);
+		Personal co = new Cocinero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, especialidadCulinaria, plusCategoria, estado);
 
 		return this.lstPersonal.add(co);
 	}
@@ -157,15 +157,15 @@ public class Sistema {
 		return eliminado;
 	}
 
-	//CASO DE USO 2 - Localizar cualquier entidad del sistema. Personal se busca por DNI, Unidad por código.
-
-	public Cajero traerCajero(int idCajero) {
+	//CU 2 - Localizar cualquier entidad del sistema. Personal se busca por DNI, Unidad por código.
+	
+	public Cajero traerCajero(int dniCajero) {
 
 		Cajero c = null;
 		int i = 0;
 
 		while(i < this.lstPersonal.size() && c == null) {
-			if(this.lstPersonal.get(i).getIdPersonal() == idCajero && this.lstPersonal.get(i) instanceof Cajero) {
+			if(this.lstPersonal.get(i).getDni() == dniCajero && this.lstPersonal.get(i) instanceof Cajero) {
 				c = (Cajero) this.lstPersonal.get(i);
 			}
 			i++;
@@ -174,13 +174,13 @@ public class Sistema {
 		return c;
 	}
 
-	public Cocinero traerCocinero(int idCocinero) {
+	public Cocinero traerCocinero(int dniCocinero) {
 
 		Cocinero c = null;
 		int i = 0;
 
 		while(i < this.lstPersonal.size() && c == null) {
-			if(this.lstPersonal.get(i).getIdPersonal() == idCocinero && this.lstPersonal.get(i) instanceof Cocinero) {
+			if(this.lstPersonal.get(i).getDni() == dniCocinero && this.lstPersonal.get(i) instanceof Cocinero) {
 				c = (Cocinero) this.lstPersonal.get(i);
 			}
 			i++;
@@ -188,7 +188,22 @@ public class Sistema {
 
 		return c;
 	}
-
+	
+	public UnidadVenta traerUnidad(String codigo) {
+		UnidadVenta uv = null;
+		int i = 0;
+		
+		while(i < this.lstUnidades.size() && uv == null) {
+			if(this.lstUnidades.get(i).getCodigo().equalsIgnoreCase(codigo) && this.lstUnidades.get(i) instanceof PuestoDesarmable) {
+				uv = (PuestoDesarmable) this.lstUnidades.get(i);
+			}else if(this.lstUnidades.get(i).getCodigo().equalsIgnoreCase(codigo) && this.lstUnidades.get(i) instanceof FoodTruck) {
+				uv = (FoodTruck) this.lstUnidades.get(i);
+			}
+			i++;
+		}
+		
+		return uv;
+	}
 	public FoodTruck traerFoodTruck(int idFoodTruck) {
 
 		FoodTruck f = null;
@@ -271,5 +286,32 @@ public class Sistema {
 		return canon;
 	}
 	
+	// CU 4 — Liquidación de Haberes - Punto de entrada del sistema. Usa CU #2 (traerPersonal) para obtener el empleado y delega a liquidarHaberes().
 	
+	public float liquidarHaberes(int dni) {
+		
+		float sueldo = 0;
+		
+		if(this.traerCocinero(dni) != null) {
+			sueldo = this.traerCocinero(dni).liquidarHaberes();
+		}else if(this.traerCajero(dni) != null) {
+			sueldo = this.traerCajero(dni).liquidarHaberes();
+		}
+		
+		return sueldo;
+	}
+	
+	// CU 5 - Registro de Pedido Validado - Invoca internamente CU #2 (traerFestival y traerUnidad) 
+	// antes de crear el pedido. Si alguna entidad no existe, retorna false.
+	
+	public boolean agregarPedido(LocalDate fecha, int idFestival, String codigoUnidad) throws Exception{
+		
+		if(this.traerFestival(idFestival) == null || (this.traerUnidad(codigoUnidad) == null)) {
+			throw new Exception("No existe el festival o la unidad ingresada");
+		}
+		
+		int id = this.lstPedidos.isEmpty() ? 1 : this.lstPedidos.get(this.lstPedidos.size() - 1).getIdPedido() + 1;
+		
+		return this.lstPedidos.add(new Pedido(id, fecha, this.traerFestival(idFestival), this.traerUnidad(codigoUnidad)));
+	}
 }
