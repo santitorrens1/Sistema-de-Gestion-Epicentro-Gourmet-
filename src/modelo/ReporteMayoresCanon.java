@@ -1,19 +1,20 @@
 package modelo;
 
 public class ReporteMayoresCanon {
-@Override
-	public String toString() {
-		return "ReporteMayoresCanon [codigo=" + codigo + ", nombreComercial=" + nombreComercial + ", tipoUnidad="
-				+ tipoUnidad + ", canon=" + canon + "]";
-	}
-public ReporteMayoresCanon(String codigo, String nombreComercial, String tipoUnidad, float canon) {
+	private String codigo;
+	private String nombreComercial;
+	private String tipoUnidad;
+	private float canon;
+	
+	public ReporteMayoresCanon(String codigo, String nombreComercial, String tipoUnidad, float canon) {
 		super();
 		this.codigo = codigo;
 		this.nombreComercial = nombreComercial;
 		this.tipoUnidad = tipoUnidad;
 		this.canon = canon;
 	}
-public String getCodigo() {
+	
+	public String getCodigo() {
 		return codigo;
 	}
 	public void setCodigo(String codigo) {
@@ -37,9 +38,10 @@ public String getCodigo() {
 	public void setCanon(float canon) {
 		this.canon = canon;
 	}
-private String codigo;
-private String nombreComercial;
-private String tipoUnidad;
-private float canon;
 
+	@Override
+	public String toString() {
+		return "ReporteMayoresCanon [codigo=" + codigo + ", nombreComercial=" + nombreComercial + ", tipoUnidad="
+				+ tipoUnidad + ", canon=" + canon + "]";
+	}
 }

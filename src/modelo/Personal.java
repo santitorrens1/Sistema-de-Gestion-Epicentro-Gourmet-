@@ -1,16 +1,21 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public abstract class Personal {
-	@Override
-	public String toString() {
-		return "Personal [idPersonal=" + idPersonal + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
-				+ ", fechaNac=" + fechaNac + ", fechaIng=" + fechaIng + ", tipo=" + tipo + ", sueldoBase=" + sueldoBase
-				+ "]";
-	}
+
+	protected int idPersonal;
+	protected String nombre;
+	protected String apellido;
+	protected int dni;
+	protected LocalDate fechaNac;
+	protected LocalDate fechaIng;
+	protected String tipo;
+	protected float sueldoBase;
+
 	public Personal(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, float sueldoBase) {
+			String tipo) {
 		super();
 		this.idPersonal = idPersonal;
 		this.nombre = nombre;
@@ -19,8 +24,9 @@ public abstract class Personal {
 		this.fechaNac = fechaNac;
 		this.fechaIng = fechaIng;
 		this.tipo = tipo;
-		this.sueldoBase = sueldoBase;
+		this.sueldoBase = 100000.f;
 	}
+	
 	public int getIdPersonal() {
 		return idPersonal;
 	}
@@ -69,12 +75,25 @@ public abstract class Personal {
 	public void setSueldoBase(float sueldoBase) {
 		this.sueldoBase = sueldoBase;
 	}
-	protected int idPersonal;
-	protected String nombre;
-	protected String apellido;
-	protected int dni;
-	protected LocalDate fechaNac;
-	protected LocalDate fechaIng;
-	protected String tipo;
-	protected float sueldoBase;
+
+	@Override
+	public String toString() {
+		return "Personal [idPersonal=" + idPersonal + ", nombre=" + nombre + ", apellido=" + apellido + ", dni=" + dni
+				+ ", fechaNac=" + fechaNac + ", fechaIng=" + fechaIng + ", tipo=" + tipo + ", sueldoBase=" + sueldoBase
+				+ "]";
+	}
+	
+	public boolean equals(Personal personal) {
+		return this.getDni() == personal.getDni();
+	}
+	
+	// CU 4 
+	public abstract float liquidarHaberes();
+	
+	public int calcularAntiguedad() {
+		LocalDate fechaInicio = this.getFechaIng();
+		LocalDate fechaFin = LocalDate.now();
+		
+		return Period.between(fechaInicio, fechaFin).getYears();
+	}
 }

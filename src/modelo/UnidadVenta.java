@@ -1,28 +1,35 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class UnidadVenta {
-@Override
-	public String toString() {
-		return "UnidadVenta [idUnidadVenta=" + idUnidadVenta + ", nombreComercial=" + nombreComercial + ", responsable="
-				+ responsable + ", superficieMt2=" + superficieMt2 + ", codigo=" + codigo + ", lstPlatos=" + lstPlatos
-				+ ", lstPersonal=" + lstPersonal + ", lstPedidos=" + lstPedidos + ", estado=" + estado + "]";
-	}
-public UnidadVenta(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
-			String codigo, List<Plato> lstPlatos, List<Personal> lstPersonal, List<Pedido> lstPedidos, boolean estado) {
+	
+	protected int idUnidadVenta;
+	protected String nombreComercial;
+	protected Personal responsable;
+	protected float superficieMt2;
+	protected String codigo;
+	protected List<Plato> lstPlatos;
+	protected List<Personal> lstPersonal;
+	protected List<Pedido> lstPedidos;
+	protected boolean estado;
+
+	public UnidadVenta(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
+			String codigo,  boolean estado) {
 		super();
 		this.idUnidadVenta = idUnidadVenta;
 		this.nombreComercial = nombreComercial;
 		this.responsable = responsable;
 		this.superficieMt2 = superficieMt2;
 		this.codigo = codigo;
-		this.lstPlatos = lstPlatos;
-		this.lstPersonal = lstPersonal;
-		this.lstPedidos = lstPedidos;
+		this.lstPlatos = new ArrayList<Plato>();
+		this.lstPersonal = new ArrayList<Personal>();
+		this.lstPedidos = new ArrayList<Pedido>();
 		this.estado = estado;
 	}
-public int getIdUnidadVenta() {
+	
+	public int getIdUnidadVenta() {
 		return idUnidadVenta;
 	}
 	public void setIdUnidadVenta(int idUnidadVenta) {
@@ -76,13 +83,34 @@ public int getIdUnidadVenta() {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-protected int idUnidadVenta;
-protected String nombreComercial;
-protected Personal responsable;
-protected float superficieMt2;
-protected String codigo;
-protected List<Plato> lstPlatos;
-protected List<Personal> lstPersonal;
-protected List<Pedido> lstPedidos;
-protected boolean estado;
+
+
+	@Override
+	public String toString() {
+		return "UnidadVenta [idUnidadVenta=" + idUnidadVenta + ", nombreComercial=" + nombreComercial + ", responsable="
+				+ responsable + ", superficieMt2=" + superficieMt2 + ", codigo=" + codigo + ", lstPlatos=" + lstPlatos
+				+ ", lstPersonal=" + lstPersonal + ", lstPedidos=" + lstPedidos + ", estado=" + estado + "]";
+	}
+	
+	public boolean equals(UnidadVenta unidadVenta) {
+		return this.getCodigo().equalsIgnoreCase(unidadVenta.getCodigo());
+	}
+	
+	//CASO DE USO 2 - Localizar cualquier entidad del sistema.
+	public Plato traerPlato(int idPlato) {
+		Plato p = null;
+		int i = 0;
+		
+		while(i < this.lstPlatos.size() && p == null) {
+			if(this.lstPlatos.get(i).getIdPlato() == idPlato) {
+				p = this.lstPlatos.get(i);
+			}
+			i++;
+		}
+		
+		return p;
+	}
+	
+	public abstract float calcularCanon();
+	
 }

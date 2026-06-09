@@ -1,19 +1,20 @@
 package modelo;
 
 public class Costo {
-@Override
-	public String toString() {
-		return "Costo [idCosto=" + idCosto + ", costoSuperficie=" + costoSuperficie + ", costoMontaje=" + costoMontaje
-				+ ", usoElectricidad=" + usoElectricidad + "]";
-	}
-public Costo(int idCosto, float costoSuperficie, float costoMontaje, float usoElectricidad) {
+	private int idCosto;
+	private float costoSuperficie;
+	private float costoMontaje;
+	private float usoElectricidad;
+
+	public Costo(int idCosto, float costoSuperficie, float costoMontaje, float usoElectricidad) {
 		super();
 		this.idCosto = idCosto;
 		this.costoSuperficie = costoSuperficie;
 		this.costoMontaje = costoMontaje;
 		this.usoElectricidad = usoElectricidad;
 	}
-public int getIdCosto() {
+	
+	public int getIdCosto() {
 		return idCosto;
 	}
 	public void setIdCosto(int idCosto) {
@@ -37,8 +38,14 @@ public int getIdCosto() {
 	public void setUsoElectricidad(float usoElectricidad) {
 		this.usoElectricidad = usoElectricidad;
 	}
-private int idCosto;
-private float costoSuperficie;
-private float costoMontaje;
-private float usoElectricidad;
+
+	@Override
+	public String toString() {
+		return "Costo [idCosto=" + idCosto + ", costoSuperficie=" + costoSuperficie + ", costoMontaje=" + costoMontaje
+				+ ", usoElectricidad=" + usoElectricidad + "]";
+	}
+	
+	public boolean equals(Costo costo) {
+		return this.getIdCosto() == costo.getIdCosto();
+	}
 }

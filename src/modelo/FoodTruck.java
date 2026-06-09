@@ -1,31 +1,23 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class FoodTruck extends UnidadVenta{
-@Override
-	public String toString() {
-		return super.toString() + "FoodTruck [idFoodTruck=" + idFoodTruck + ", patente=" + patente + ", electricidad=" + electricidad
-				+ ", lstPersonal=" + lstPersonal + ", lstPlatosOfrecidos=" + lstPlatosOfrecidos + "]";
-	}
-public FoodTruck(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
-			String codigo, List<Plato> lstPlatos, List<Personal> lstPersonal, List<Pedido> lstPedidos, boolean estado,
-			int idFoodTruck, String patente, boolean electricidad, List<Personal> lstPersonal2,
-			List<Plato> lstPlatosOfrecidos) {
-		super(idUnidadVenta, nombreComercial, responsable, superficieMt2, codigo, lstPlatos, lstPersonal, lstPedidos,
-				estado);
-		this.idFoodTruck = idFoodTruck;
+	private String patente;
+	private boolean electricidad;
+	private List<Personal> lstPersonal;
+	private List<Plato> lstPlatosOfrecidos;
+
+	public FoodTruck(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
+			String codigo, boolean estado, String patente, boolean electricidad) {
+		super(idUnidadVenta, nombreComercial, responsable, superficieMt2, codigo, estado);
 		this.patente = patente;
 		this.electricidad = electricidad;
-		lstPersonal = lstPersonal2;
-		this.lstPlatosOfrecidos = lstPlatosOfrecidos;
+		lstPersonal = new ArrayList<Personal>();
+		this.lstPlatosOfrecidos = new ArrayList<Plato>();
 	}
-public int getIdFoodTruck() {
-		return idFoodTruck;
-	}
-	public void setIdFoodTruck(int idFoodTruck) {
-		this.idFoodTruck = idFoodTruck;
-	}
+
 	public String getPatente() {
 		return patente;
 	}
@@ -50,9 +42,26 @@ public int getIdFoodTruck() {
 	public void setLstPlatosOfrecidos(List<Plato> lstPlatosOfrecidos) {
 		this.lstPlatosOfrecidos = lstPlatosOfrecidos;
 	}
-private int idFoodTruck;
-private String patente;
-private boolean electricidad;
-private List<Personal> lstPersonal;
-private List<Plato> lstPlatosOfrecidos;
+
+	@Override
+	public String toString() {
+		return super.toString() + "FoodTruck[ " + ", patente=" + patente + ", electricidad=" + electricidad
+				+ ", lstPersonal=" + lstPersonal + ", lstPlatosOfrecidos=" + lstPlatosOfrecidos + "]";
+	}
+	
+	public boolean equals(FoodTruck foodTruck) {
+		return super.equals(foodTruck);
+	}
+	
+	// CU 3 — Cálculo de Canon - Método que devuelve el monto a pagar por una unidad. FoodTruck: (Superficie × $500) + $2.000 si requiere electricidad. 
+	@Override
+	public float calcularCanon() {
+		
+		float canon = (this.getSuperficieMt2() * 500);
+		
+		if(this.isElectricidad()) {
+			canon = 2000;
+		}
+		return canon;
+	}
 }

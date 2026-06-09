@@ -1,24 +1,27 @@
 package modelo;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
-@Override
-	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", fecha=" + fecha + ", festival=" + festival + ", unidadVenta="
-				+ unidadVenta + ", lstDetalles=" + lstDetalles + "]";
-	}
-public Pedido(int idPedido, LocalDate fecha, Festival festival, UnidadVenta unidadVenta,
-			List<DetallePedidoPlato> lstDetalles) {
-		super();
+
+	private int idPedido;
+	private LocalDate fecha;
+	private Festival festival;
+	private UnidadVenta unidadVenta;
+	private List<DetallePedidoPlato> lstDetalles;
+
+
+	public Pedido(int idPedido, LocalDate fecha, Festival festival, UnidadVenta unidadVenta) {
 		this.idPedido = idPedido;
 		this.fecha = fecha;
 		this.festival = festival;
 		this.unidadVenta = unidadVenta;
-		this.lstDetalles = lstDetalles;
+		this.lstDetalles = new ArrayList<DetallePedidoPlato>();
 	}
-public int getIdPedido() {
+	
+	public int getIdPedido() {
 		return idPedido;
 	}
 	public void setIdPedido(int idPedido) {
@@ -48,9 +51,14 @@ public int getIdPedido() {
 	public void setLstDetalles(List<DetallePedidoPlato> lstDetalles) {
 		this.lstDetalles = lstDetalles;
 	}
-private int idPedido;
-private LocalDate fecha;
-private Festival festival;
-private UnidadVenta unidadVenta;
-private List<DetallePedidoPlato> lstDetalles;
+
+	@Override
+	public String toString() {
+		return "Pedido [idPedido=" + idPedido + ", fecha=" + fecha + ", festival=" + festival + ", unidadVenta="
+				+ unidadVenta + ", lstDetalles=" + lstDetalles + "]";
+	}
+	
+	public boolean equals(Pedido pedido) {
+		return this.getIdPedido() == pedido.getIdPedido();
+	}
 }
