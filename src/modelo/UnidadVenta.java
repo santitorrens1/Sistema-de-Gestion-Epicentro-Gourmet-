@@ -110,4 +110,7 @@ public abstract class UnidadVenta {
 		
 		return p;
 	}
+	
+	public abstract float calcularCanon();
+	
 }

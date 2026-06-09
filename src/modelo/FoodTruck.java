@@ -52,4 +52,16 @@ public class FoodTruck extends UnidadVenta{
 	public boolean equals(FoodTruck foodTruck) {
 		return super.equals(foodTruck);
 	}
+	
+	// CU 3 — Cálculo de Canon - Método que devuelve el monto a pagar por una unidad. FoodTruck: (Superficie × $500) + $2.000 si requiere electricidad. 
+	@Override
+	public float calcularCanon() {
+		
+		float canon = (this.getSuperficieMt2() * 500);
+		
+		if(this.isElectricidad()) {
+			canon = 2000;
+		}
+		return canon;
+	}
 }

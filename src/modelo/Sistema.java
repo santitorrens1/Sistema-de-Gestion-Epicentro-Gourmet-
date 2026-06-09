@@ -247,4 +247,29 @@ public class Sistema {
 		
 		return f;
 	}
+	
+	// CU 3 — Cálculo de Canon - Método que devuelve el monto a pagar por una unidad.
+	
+	public float calcularCanon(String codigo) {
+		float canon = 0;
+		boolean calculado = false;
+		int i = 0;
+		
+		while(i < this.lstUnidades.size() && calculado == false) {
+			if(this.lstUnidades.get(i).getCodigo().equalsIgnoreCase(codigo) && 
+					this.lstUnidades.get(i) instanceof FoodTruck) {
+				canon = this.lstUnidades.get(i).calcularCanon();
+				calculado = true;
+			}
+			if(this.lstUnidades.get(i).getCodigo().equalsIgnoreCase(codigo) && 
+					this.lstUnidades.get(i) instanceof PuestoDesarmable) {
+				canon = this.lstUnidades.get(i).calcularCanon();
+				calculado = true;
+			}
+			i++;
+		}
+		return canon;
+	}
+	
+	
 }

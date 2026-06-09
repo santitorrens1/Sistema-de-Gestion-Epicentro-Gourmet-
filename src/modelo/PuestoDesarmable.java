@@ -53,4 +53,11 @@ public class PuestoDesarmable extends UnidadVenta {
 	public boolean equals(PuestoDesarmable puestoDesarmable) {
 		return super.equals(puestoDesarmable);
 	}
+
+	// CU 3 — Cálculo de Canon - Método que devuelve el monto a pagar por una unidad.PuestoDesarmable: (Superficie × $500) − (Tiempo de montaje × $10).. 
+	@Override
+	public float calcularCanon() {
+		 float canon = (this.getSuperficieMt2() * 500) - (this.getTiempoMontaje() * 10);
+		 return canon;
+	}
 }
