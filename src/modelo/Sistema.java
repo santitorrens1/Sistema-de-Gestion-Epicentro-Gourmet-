@@ -314,4 +314,205 @@ public class Sistema {
 		
 		return this.lstPedidos.add(new Pedido(id, fecha, this.traerFestival(idFestival), this.traerUnidad(codigoUnidad)));
 	}
+	
+	//CU 6 -  Reporte de Recaudación
+	//Dado un festival, retornar la lista de unidades con su recaudación total. Utiliza la clase ReporteVenta que no persiste
+
+	public List<ReporteVenta> reporteRecaudacion(int idFestival){
+		List<ReporteVenta> reportes = new ArrayList<ReporteVenta>();
+		Festival f1 = this.traerFestival(idFestival);	
+		for(int i = 0;i < f1.getLstUnidadesVenta().size();i++) {
+			float recaudacion = 0;
+			for(int j = 0;j < f1.getLstUnidadesVenta().get(i).getLstPedidos().size();j++) {
+				for(int h = 0; h < f1.getLstUnidadesVenta().get(i).getLstPedidos().get(j).getLstDetalles().size();h++) {
+					DetallePedidoPlato detalle= f1.getLstUnidadesVenta().get(i).getLstPedidos().get(j).getLstDetalles().get(h);
+					recaudacion += detalle.getPlato().getPrecioVenta() * detalle.getCantidad();
+				}
+			}
+			ReporteVenta reporte = new ReporteVenta(f1.getLstUnidadesVenta().get(i),recaudacion);
+			reportes.add(reporte);
+		}
+		return reportes;
+	}
+	
+	//CU 7 - CU 7 — Filtro de Personal por Edad
+	//Retornar una lista de empleados nacidos entre dos fechas dadas
+	
+	public List<Personal> traerPersonalEdad(LocalDate fechaInicio,LocalDate fechaFin){
+		List<Personal> personales = new ArrayList<Personal>();
+		for(int i = 0;i < this.lstPersonal.size();i++) {
+			Personal p = lstPersonal.get(i);
+			if((p.getFechaNac().isEqual(fechaInicio) || p.getFechaNac().isAfter(fechaInicio)) && (p.getFechaNac().isEqual(fechaFin) || 
+					p.getFechaNac().isBefore(fechaFin))) {
+				personales.add(p);
+			}
+		}
+		
+		return personales;
+	}
+	
+	//CU 8 — Cálculo de Rentabilidad Neta
+	//Calcular la ganancia neta de una unidad: (recaudación total de pedidos − costo de producción de los platos) − sueldos del personal − canon de la unidad.
+	
+	//cree un traerUnidad por id solo para esta funcion porque asi me resulta mas facil
+	
+	public UnidadVenta traerUnidadPorid(int idUnidadVenta) {
+		UnidadVenta u = null;
+		int i = 0;
+		while(i < this.lstUnidades.size() && u == null) {
+			if(this.lstUnidades.get(i).getIdUnidadVenta() == idUnidadVenta) {
+				u = lstUnidades.get(i);
+			}
+			i++;
+		}
+		return u;   
+		
+	}
+	
+	
+	public float calcularGanancia(int idUnidadVenta) {
+		float totalNeto = 0;
+		UnidadVenta u = this.traerUnidadPorid(idUnidadVenta);
+		float canon = this.calcularCanon(u.getCodigo());
+		float recaudacion = 0;
+		float costoProduccion = 0;
+		float sueldos = 0;
+		for(int i = 0;i < u.getLstPedidos().size();i++) {
+			Pedido p = u.getLstPedidos().get(i);
+			for(int j = 0;j < p.getLstDetalles().size();j++) {
+				Plato plato = p.getLstDetalles().get(j).getPlato();
+				recaudacion += plato.getPrecioVenta() * p.getLstDetalles().get(j).getCantidad();
+				costoProduccion += plato.getCostroProd() * p.getLstDetalles().get(j).getCantidad();
+			}
+		}
+		
+		for(int i = 0; i < u.getLstPersonal().size();i++) {
+			sueldos += u.getLstPersonal().get(i).liquidarHaberes();
+		}
+		totalNeto = (recaudacion - costoProduccion) - sueldos - canon;
+		return totalNeto;
+		
+	}
+	
+	//CU 9 — Rentabilidad Neta entre dos fechas
+	//Para una unidad dada, calcular la rentabilidad neta considerando únicamente los pedidos dentro del rango de fechas indicado
+	
+	public float calcularGananciaFechas(int idUnidadVenta,LocalDate fechaInicio,LocalDate fechaFin) {
+		float totalNeto = 0;
+		UnidadVenta u = this.traerUnidadPorid(idUnidadVenta);
+		float canon = this.calcularCanon(u.getCodigo());
+		float recaudacion = 0;
+		float costoProduccion = 0;
+		float sueldos = 0;
+		for(int i = 0;i < u.getLstPedidos().size();i++) {
+			Pedido p = u.getLstPedidos().get(i);
+			if((p.getFecha().isEqual(fechaInicio) || p.getFecha().isAfter(fechaInicio)) && (p.getFecha().isEqual(fechaFin) ||
+					p.getFecha().isBefore(fechaFin))){
+				for(int j = 0;j < p.getLstDetalles().size();j++) {
+					Plato plato = p.getLstDetalles().get(j).getPlato();
+					recaudacion += plato.getPrecioVenta() * p.getLstDetalles().get(j).getCantidad();
+					costoProduccion += plato.getCostroProd() * p.getLstDetalles().get(j).getCantidad();
+				}
+			}
+			
+		}
+		for(int i = 0; i < u.getLstPersonal().size();i++) {
+			sueldos += u.getLstPersonal().get(i).liquidarHaberes();
+		}
+		totalNeto = (recaudacion - costoProduccion) - sueldos - canon;
+		return totalNeto;
+		
+	}
+	
+	//CU 10 — Ranking de Unidades
+	//Generar una lista de unidades ordenada de mayor a menor recaudación.
+	
+	public List<UnidadVenta> ordenarUnidadesRecaudaciones(){
+		List<UnidadVenta> unidades = new ArrayList<UnidadVenta>(this.lstUnidades);
+		
+		for(int i = 0;i < unidades.size();i++) {
+			for(int j = i  + 1;j < unidades.size();j++) {
+				if(this.calcularGanancia(unidades.get(i).getIdUnidadVenta()) < this.calcularGanancia(unidades.get(j).getIdUnidadVenta())) {
+					UnidadVenta aux = unidades.get(i);
+					unidades.set(i, unidades.get(j));
+					unidades.set(j, aux);
+				}
+			}
+		}
+		return unidades;
+	}
+	
+	//CU 11 — Plato Estrella
+	//Dado una unidad y un festival, devolver el plato que registró la mayor cantidad de unidades pedidas.
+	
+	public Plato traerPlatoEstrella(int idUnidad,int idFestival) {
+		UnidadVenta u = this.traerUnidadPorid(idUnidad);
+		Festival f = this.traerFestival(idFestival);
+		Plato estrella = null;
+		int maximaCant = 0;
+		for(int i = 0;i < u.getLstPedidos().size();i++) {
+			if(u.getLstPedidos().get(i).getFestival().equals(f)) {
+				for(int j = 0;j < u.getLstPedidos().get(i).getLstDetalles().size();j++) {
+					DetallePedidoPlato detalle = u.getLstPedidos().get(i).getLstDetalles().get(j);
+	 				if(maximaCant < detalle.getCantidad()) {
+						maximaCant = detalle.getCantidad();
+						estrella = detalle.getPlato();
+					}
+				}
+			}
+		}
+		return estrella;
+		
+	}
+	
+	//CU 12 — Auditoría de Personal del Festival
+	//Retornar la lista de todo el personal que trabajó en un festival específico.
+	
+	public List<Personal> traerPersonalFestival(int idFestival){
+		List<Personal> personales = new ArrayList<Personal>();
+		Festival f1 = this.traerFestival(idFestival);
+		for(int j = 0;j < f1.getLstUnidadesVenta().size();j++) {
+			for(int i = 0;i < f1.getLstUnidadesVenta().get(j).getLstPersonal().size();i++) {
+				Personal p = f1.getLstUnidadesVenta().get(j).getLstPersonal().get(i);
+				personales.add(p);
+			}
+			}
+		
+		return personales;
+		}
+	
+
+	//CU 13 — Unidades con Mayor Canon
+	//Dado un festival, devolver las 3 unidades que más gastaron en canon. Utiliza la clase ReporteMayoresCanon que no persiste.
+	
+	public List<ReporteMayoresCanon> unidadesConMayorCanon(int idFestival){
+		List<ReporteMayoresCanon> reportes = new ArrayList<ReporteMayoresCanon>();
+		Festival f = this.traerFestival(idFestival);
+		List<UnidadVenta> unidadesMayorCanon = new ArrayList<UnidadVenta>(f.getLstUnidadesVenta());
+		for(int i = 0;i < unidadesMayorCanon.size();i++) {
+			for(int j = i+1;j < unidadesMayorCanon.size();j++) {
+				if(this.calcularCanon(unidadesMayorCanon.get(i).getCodigo()) < this.calcularCanon(unidadesMayorCanon.get(j).getCodigo())) {
+					UnidadVenta aux = unidadesMayorCanon.get(i);
+					unidadesMayorCanon.set(i, unidadesMayorCanon.get(j));
+					unidadesMayorCanon.set(j, aux);
+				}
+			}
+		}
+		int a = 0;
+		while(reportes.size() < 3 && a < unidadesMayorCanon.size()) {
+			String tipoUnidad = null;
+			UnidadVenta uni = unidadesMayorCanon.get(a);
+			if(uni instanceof FoodTruck) {
+				tipoUnidad = "FoodTruck";
+			}else if(uni instanceof PuestoDesarmable) {
+				tipoUnidad = "Puesto Desarmable";
+			}
+			ReporteMayoresCanon reporte = new ReporteMayoresCanon(uni.getCodigo(),uni.getNombreComercial(),tipoUnidad,this.calcularCanon(uni.getCodigo()));
+			reportes.add(reporte);
+			a++;
+		}
+		
+		return reportes;
+	}
+
 }
