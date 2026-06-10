@@ -8,7 +8,7 @@ public class Cajero extends Personal{
 	private boolean estado;
 
 	public Cajero(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo, String turno, boolean estado) {
+			String tipo, String turno, boolean estado) throws Exception {
 		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo);
 		this.turno = turno;
 		this.estado = estado;
