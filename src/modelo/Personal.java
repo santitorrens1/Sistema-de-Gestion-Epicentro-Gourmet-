@@ -15,14 +15,14 @@ public abstract class Personal {
 	protected float sueldoBase;
 
 	public Personal(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
-			String tipo) {
+			String tipo) throws Exception {
 		super();
 		this.idPersonal = idPersonal;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.dni = dni;
 		this.fechaNac = fechaNac;
-		this.fechaIng = fechaIng;
+		this.setFechaNac(fechaNac);
 		this.tipo = tipo;
 		this.sueldoBase = 100000.f;
 	}
@@ -54,8 +54,11 @@ public abstract class Personal {
 	public LocalDate getFechaNac() {
 		return fechaNac;
 	}
-	public void setFechaNac(LocalDate fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setFechaNac(LocalDate fechaNac)throws Exception {
+	    if (fechaNac == null || Period.between(fechaNac, LocalDate.now()).getYears() < 18) {
+	        throw new Exception("El personal debe ser mayor de edad.");
+	    }
+	    this.fechaNac = fechaNac;
 	}
 	public LocalDate getFechaIng() {
 		return fechaIng;

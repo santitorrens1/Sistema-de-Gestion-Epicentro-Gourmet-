@@ -12,7 +12,7 @@ public class Festival {
 	private LocalDate fechaFin;
 	private List<Costo>lstCostos;
 	private List<UnidadVenta>lstUnidadesVenta;
-	public boolean estado;
+	private boolean estado;
 
 	public Festival(int idFestival, String nombre, String temporada, LocalDate fechaInicio, LocalDate fechaFin,
 			 boolean estado) {

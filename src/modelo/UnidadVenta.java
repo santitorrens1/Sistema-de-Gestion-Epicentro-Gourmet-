@@ -16,13 +16,13 @@ public abstract class UnidadVenta {
 	protected boolean estado;
 
 	public UnidadVenta(int idUnidadVenta, String nombreComercial, Personal responsable, float superficieMt2,
-			String codigo,  boolean estado) {
+			String codigo,  boolean estado) throws Exception {
 		super();
 		this.idUnidadVenta = idUnidadVenta;
 		this.nombreComercial = nombreComercial;
 		this.responsable = responsable;
 		this.superficieMt2 = superficieMt2;
-		this.codigo = codigo;
+		this.setCodigo(codigo);
 		this.lstPlatos = new ArrayList<Plato>();
 		this.lstPersonal = new ArrayList<Personal>();
 		this.lstPedidos = new ArrayList<Pedido>();
@@ -56,8 +56,11 @@ public abstract class UnidadVenta {
 	public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(String codigo) {
-		this.codigo = codigo;
+	public void setCodigo(String codigo)throws Exception {
+	    if (codigo == null || codigo.length() != 10) {
+	        throw new Exception("El código debe tener exactamente 10 caracteres.");
+	    }
+	    this.codigo = codigo;
 	}
 	public List<Plato> getLstPlatos() {
 		return lstPlatos;

@@ -10,7 +10,7 @@ public class Cocinero extends Personal {
 
 	public Cocinero(int idPersonal, String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
 			String tipo , String especialidadCulinaria, float plusCategoria,
-			boolean estado) {
+			boolean estado) throws Exception {
 		super(idPersonal, nombre, apellido, dni, fechaNac, fechaIng, tipo);
 		this.especialidadCulinaria = especialidadCulinaria;
 		this.plusCategoria = plusCategoria;

@@ -4,14 +4,14 @@ public class Plato {
 	private int idPlato;
 	private String nombre;
 	private float precioVenta;
-	private float costroProd;
+	private float costoProd;
 
 	public Plato(int idPlato, String nombre, float precioVenta, float costroProd) {
 		super();
 		this.idPlato = idPlato;
 		this.nombre = nombre;
 		this.precioVenta = precioVenta;
-		this.costroProd = costroProd;
+		this.costoProd = costroProd;
 	}
 	public int getIdPlato() {
 		return idPlato;
@@ -31,17 +31,17 @@ public class Plato {
 	public void setPrecioVenta(float precioVenta) {
 		this.precioVenta = precioVenta;
 	}
-	public float getCostroProd() {
-		return costroProd;
+	public float getCostoProd() {
+		return costoProd;
 	}
 	public void setCostroProd(float costroProd) {
-		this.costroProd = costroProd;
+		this.costoProd = costroProd;
 	}
 
 	@Override
 	public String toString() {
-		return "Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", costroProd="
-				+ costroProd + "]";
+		return "Plato [idPlato=" + idPlato + ", nombre=" + nombre + ", precioVenta=" + precioVenta + ", costoProd="
+				+ costoProd + "]";
 	}
 	
 	public boolean equals(Plato plato) {
