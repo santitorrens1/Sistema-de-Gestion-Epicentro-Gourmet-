@@ -54,8 +54,11 @@ public class Pedido {
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", fecha=" + fecha + ", festival=" + festival + ", unidadVenta="
-				+ unidadVenta + ", lstDetalles=" + lstDetalles + "]";
+	    return "Pedido [idPedido=" + idPedido + 
+	           ", fecha=" + fecha + 
+	           ", festival=" + (festival != null ? festival.getNombre() : "null") +
+	           ", unidadVenta=" + (unidadVenta != null ? unidadVenta.getCodigo() : "null") +
+	           ", lstDetalles=" + lstDetalles + "]";
 	}
 	
 	public boolean equals(Pedido pedido) {

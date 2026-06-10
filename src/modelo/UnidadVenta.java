@@ -90,11 +90,15 @@ public abstract class UnidadVenta {
 
 	@Override
 	public String toString() {
-		return "UnidadVenta [idUnidadVenta=" + idUnidadVenta + ", nombreComercial=" + nombreComercial + ", responsable="
-				+ responsable + ", superficieMt2=" + superficieMt2 + ", codigo=" + codigo + ", lstPlatos=" + lstPlatos
-				+ ", lstPersonal=" + lstPersonal + ", lstPedidos=" + lstPedidos + ", estado=" + estado + "]";
+	    return "UnidadVenta [idUnidadVenta=" + idUnidadVenta + 
+	           ", nombreComercial=" + nombreComercial + 
+	           ", responsable=" + responsable + 
+	           ", superficieMt2=" + superficieMt2 + 
+	           ", codigo=" + codigo + 
+	           ", lstPlatos=" + lstPlatos + 
+	           ", lstPersonal=" + lstPersonal + 
+	           ", estado=" + estado + "]";
 	}
-	
 	public boolean equals(UnidadVenta unidadVenta) {
 		return this.getCodigo().equalsIgnoreCase(unidadVenta.getCodigo());
 	}
