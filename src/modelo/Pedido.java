@@ -51,11 +51,42 @@ public class Pedido {
 	public void setLstDetalles(List<DetallePedidoPlato> lstDetalles) {
 		this.lstDetalles = lstDetalles;
 	}
+	
+	public DetallePedidoPlato traerDetallePedido(Plato plato, int cantidad) {
+		DetallePedidoPlato detallePedido = null;
+		int i=0;
+		while(i<getLstDetalles().size() && detallePedido == null) {
+			if(this.getLstDetalles().get(i).getPlato().equals(plato) && this.getLstDetalles().get(i).getCantidad() == cantidad) {
+				
+				detallePedido = getLstDetalles().get(i);
+			}
+			i++;
+		}
+		return detallePedido;
+	}
+	
+	public boolean agregarDetallePedido (Plato plato, int cantidad)throws Exception{
+		
+		if(traerDetallePedido(plato, cantidad)!=null) {
+			throw new Exception("Este detalle ya existe");
+		}
+		
+		int id = this.getLstDetalles().isEmpty() ? 1 : this.getLstDetalles().get(this.getLstDetalles().size() - 1).getIdDetallePedido()+1;
+
+		DetallePedidoPlato detallePedido = new DetallePedidoPlato(id, plato, cantidad);
+		
+		return this.getLstDetalles().add(detallePedido);
+	}
+
+	
 
 	@Override
 	public String toString() {
-		return "Pedido [idPedido=" + idPedido + ", fecha=" + fecha + ", festival=" + festival + ", unidadVenta="
-				+ unidadVenta + ", lstDetalles=" + lstDetalles + "]";
+	    return "Pedido [idPedido=" + idPedido + 
+	           ", fecha=" + fecha + 
+	           ", festival=" + (festival != null ? festival.getNombre() : "null") +
+	           ", unidadVenta=" + (unidadVenta != null ? unidadVenta.getCodigo() : "null") +
+	           ", lstDetalles=" + lstDetalles + "]";
 	}
 	
 	public boolean equals(Pedido pedido) {

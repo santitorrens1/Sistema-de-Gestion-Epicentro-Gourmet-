@@ -30,7 +30,7 @@ public class Cajero extends Personal{
 
 	@Override
 	public String toString() {
-		return super.toString() + "Cajero ["  + ", turno=" + turno + ", estado=" + estado + "]";
+		return "Cajero ["  + super.toString() + ", turno=" + turno + ", estado=" + estado + "]\n";
 	}
 	
 	public boolean equals(Cajero cajero) {

@@ -25,6 +25,7 @@ public abstract class Personal {
 		this.setFechaNac(fechaNac);
 		this.tipo = tipo;
 		this.sueldoBase = 100000.f;
+		this.fechaIng = fechaIng;
 	}
 	
 	public int getIdPersonal() {

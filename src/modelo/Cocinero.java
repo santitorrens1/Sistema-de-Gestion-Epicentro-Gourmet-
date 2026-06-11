@@ -39,8 +39,8 @@ public class Cocinero extends Personal {
 
 	@Override
 	public String toString() {
-		return super.toString() + "Cocinero [" + ", especialidadCulinaria=" + especialidadCulinaria
-				+ ", plusCategoria=" + plusCategoria + ", estado=" + estado + "]";
+		return "Cocinero " + super.toString() +" Especialidad Culinaria=" + especialidadCulinaria
+				+ ", plusCategoria=" + plusCategoria + ", estado=" + estado + "]\n";
 	}
 	
 	public boolean equals(Cocinero cocinero) {

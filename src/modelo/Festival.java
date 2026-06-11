@@ -87,6 +87,7 @@ public class Festival {
 		return this.getNombre().equalsIgnoreCase(festival.getNombre());
 	}
 	
+		
 	//CASO DE USO 2 - Localizar cualquier entidad del sistema.
 	public Costo traerCosto(int idCosto) {
 		Costo c = null;

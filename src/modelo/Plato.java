@@ -6,12 +6,12 @@ public class Plato {
 	private float precioVenta;
 	private float costoProd;
 
-	public Plato(int idPlato, String nombre, float precioVenta, float costroProd) {
+	public Plato(int idPlato, String nombre, float precioVenta, float costoProd) {
 		super();
 		this.idPlato = idPlato;
 		this.nombre = nombre;
 		this.precioVenta = precioVenta;
-		this.costoProd = costroProd;
+		this.costoProd = costoProd;
 	}
 	public int getIdPlato() {
 		return idPlato;
@@ -34,8 +34,8 @@ public class Plato {
 	public float getCostoProd() {
 		return costoProd;
 	}
-	public void setCostroProd(float costroProd) {
-		this.costoProd = costroProd;
+	public void setCostoProd(float costoProd) {
+		this.costoProd = costoProd;
 	}
 
 	@Override
