@@ -6,7 +6,6 @@ public class ReporteVenta {
 	private float recaudacionTotal;
 
 	public ReporteVenta(UnidadVenta unidadVenta, float recaudacionTotal) {
-		super();
 		this.unidadVenta = unidadVenta;
 		this.recaudacionTotal = recaudacionTotal;
 	}
@@ -25,7 +24,7 @@ public class ReporteVenta {
 
 	@Override
 	public String toString() {
-		return "ReporteVenta [unidadVenta=" + unidadVenta + ", recaudacionTotal=" + recaudacionTotal + "]";
+		return "ReporteVenta [unidadVenta=" + unidadVenta + " \n recaudacionTotal=" + recaudacionTotal + "] \n";
 	}
 	
 	public boolean equals(ReporteVenta reporteVenta) {

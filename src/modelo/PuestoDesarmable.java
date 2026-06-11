@@ -30,8 +30,8 @@ public class PuestoDesarmable extends UnidadVenta {
 
 	@Override
 	public String toString() {
-		return super.toString() +"PuestoDesarmable ["  + ", cantCarpas=" + cantCarpas
-				+ ", tiempoMontaje=" + tiempoMontaje + ", lstPersonal=" + lstPersonal + "]";
+		return "PuestoDesarmable [ "  + super.toString() + " cantCarpas=" + cantCarpas
+				+ ", tiempoMontaje=" + tiempoMontaje + ", lstPersonal=" + lstPersonal + "] \n";
 	}
 	
 	public boolean equals(PuestoDesarmable puestoDesarmable) {

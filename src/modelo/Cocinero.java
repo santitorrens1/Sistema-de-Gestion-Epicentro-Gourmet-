@@ -39,7 +39,7 @@ public class Cocinero extends Personal {
 
 	@Override
 	public String toString() {
-		return super.toString() +" Especialidad Culinaria=" + especialidadCulinaria
+		return "Cocinero " + super.toString() +" Especialidad Culinaria=" + especialidadCulinaria
 				+ ", plusCategoria=" + plusCategoria + ", estado=" + estado + "]\n";
 	}
 	

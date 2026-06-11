@@ -7,7 +7,6 @@ public class ReporteMayoresCanon {
 	private float canon;
 	
 	public ReporteMayoresCanon(String codigo, String nombreComercial, String tipoUnidad, float canon) {
-		super();
 		this.codigo = codigo;
 		this.nombreComercial = nombreComercial;
 		this.tipoUnidad = tipoUnidad;
@@ -42,6 +41,6 @@ public class ReporteMayoresCanon {
 	@Override
 	public String toString() {
 		return "ReporteMayoresCanon [codigo=" + codigo + ", nombreComercial=" + nombreComercial + ", tipoUnidad="
-				+ tipoUnidad + ", canon=" + canon + "]";
+				+ tipoUnidad + ", canon=" + canon + "] \n";
 	}
 }

@@ -86,8 +86,7 @@ public abstract class UnidadVenta {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
-
-
+	
 	@Override
 	public String toString() {
 	    return "UnidadVenta [idUnidadVenta=" + idUnidadVenta + 
@@ -97,25 +96,35 @@ public abstract class UnidadVenta {
 	           ", codigo=" + codigo + 
 	           ", lstPlatos=" + lstPlatos + 
 	           ", lstPersonal=" + lstPersonal + 
-	           ", estado=" + estado + "]";
+	           ", estado=" + estado + "]\n";
 	}
 	public boolean equals(UnidadVenta unidadVenta) {
 		return this.getCodigo().equalsIgnoreCase(unidadVenta.getCodigo());
 	}
 	
-	//CASO DE USO 2 - Localizar cualquier entidad del sistema.
-	public Plato traerPlato(int idPlato) {
-		Plato p = null;
-		int i = 0;
-		
-		while(i < this.lstPlatos.size() && p == null) {
-			if(this.lstPlatos.get(i).getIdPlato() == idPlato) {
-				p = this.lstPlatos.get(i);
+	public Plato traerPlato(String nombre) {
+		Plato plato = null;
+		int i=0;
+		while(i<this.getLstPlatos().size() && plato == null) {
+			if(this.getLstPlatos().get(i).getNombre().equalsIgnoreCase(nombre)) {
+				plato = getLstPlatos().get(i);
 			}
 			i++;
 		}
+		return plato;
+	}
+	
+	public boolean agregarPlato(String nombre, float precioVenta, float costoProd)throws Exception{
 		
-		return p;
+		if(traerPlato(nombre)!=null) {
+			throw new Exception("Este plato ya existe");
+		}
+		
+		int id = this.lstPlatos.isEmpty() ? 1 : this.lstPlatos.get(this.lstPlatos.size() - 1).getIdPlato() + 1;
+
+		Plato p = new Plato(id, nombre, precioVenta, costoProd);
+		
+		return lstPlatos.add(p);
 	}
 	
 	public abstract float calcularCanon();

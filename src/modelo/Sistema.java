@@ -50,98 +50,68 @@ public class Sistema {
 		return this.lstFestivales.add(new Festival(id, nombre, temporada, fechaInicio, fechaFin, estado));
 	}
 
-	public boolean agregarFoodTruck(String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, String patente, boolean electricidad) throws Exception {
+	public boolean agregarFoodTruck(String nombreFestival,String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, String patente, boolean electricidad) throws Exception {
 
 		if(this.traerUnidad(codigo) != null && this.traerUnidad(codigo) instanceof FoodTruck) {
 			throw new Exception("El FoodTruck ya existe \n");
+		}else if(this.traerFestival(nombreFestival) == null) {
+			throw new Exception ("Este festival no existe");
 		}
+		Festival f = this.traerFestival(nombreFestival);
 		int id = this.lstUnidades.isEmpty() ? 1 : this.lstUnidades.get(this.lstUnidades.size() - 1).getIdUnidadVenta() + 1;
 
 		UnidadVenta fd = new FoodTruck(id, nombreComercial, responsable, superficie, codigo, estado, patente, electricidad);
 
-		return this.lstUnidades.add(fd);
+		return this.lstUnidades.add(fd) && f.getLstUnidadesVenta().add(fd);
 
 	}
 
-	public boolean agregarUnidadadFTFestival(String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, String patente, boolean electricidad, String nombreFestival) throws Exception {
-
-
-		UnidadVenta existente = this.traerFestival(nombreFestival)
-			    .getLstUnidadesVenta()
-			    .stream()
-			    .filter(u -> u.getCodigo().equalsIgnoreCase(codigo))
-			    .findFirst().orElse(null);
-			if (existente != null && existente instanceof FoodTruck) {
-			    throw new Exception("El Puesto Desarmable ya existe \n");
-			}
-			
-		int id = this.traerFestival(nombreFestival).getLstUnidadesVenta().isEmpty() ? 1 :  this.traerFestival(nombreFestival).getLstUnidadesVenta().get(this.traerFestival(nombreFestival).getLstUnidadesVenta().size() - 1).getIdUnidadVenta() + 1;
-
-		UnidadVenta fd = new FoodTruck(id, nombreComercial, responsable, superficie, codigo, estado, patente, electricidad);
-
-		return this.traerFestival(nombreFestival).getLstUnidadesVenta().add(fd);
-
-	}
-
-	public boolean agregarUnidadPDFestival(String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, int cantCarpas, int tiempoMontaje, String nombreFestival) throws Exception {
-
-		UnidadVenta existente = this.traerFestival(nombreFestival)
-			    .getLstUnidadesVenta()
-			    .stream()
-			    .filter(u -> u.getCodigo().equalsIgnoreCase(codigo))
-			    .findFirst().orElse(null);
-			if (existente != null && existente instanceof PuestoDesarmable) {
-			    throw new Exception("El Puesto Desarmable ya existe \n");
-			}
-
-		int id = this.traerFestival(nombreFestival).getLstUnidadesVenta().isEmpty() ? 1 : this.traerFestival(nombreFestival).getLstUnidadesVenta().get(this.traerFestival(nombreFestival).getLstUnidadesVenta().size() - 1).getIdUnidadVenta() + 1;
-
-		UnidadVenta pd = new PuestoDesarmable(id, nombreComercial, responsable, superficie, codigo, estado, cantCarpas, tiempoMontaje);
-
-		return this.traerFestival(nombreFestival).getLstUnidadesVenta().add(pd);
-
-	}
-
-	public boolean agregarPuestoDesarmable(String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, int cantCarpas, int tiempoMontaje) throws Exception {
+	public boolean agregarPuestoDesarmable(String nombreFestival ,String nombreComercial, Personal responsable, float superficie, String codigo, boolean estado, int cantCarpas, int tiempoMontaje) throws Exception {
 
 		if(this.traerUnidad(codigo) != null && this.traerUnidad(codigo) instanceof PuestoDesarmable) {
 			throw new Exception("El Puesto Desarmable ya existe \n");
+		}else if(this.traerFestival(nombreFestival) == null) {
+			throw new Exception ("Este festival no existe");
 		}
-
+		Festival f = this.traerFestival(nombreFestival);
 		int id = this.lstUnidades.isEmpty() ? 1 : this.lstUnidades.get(this.lstUnidades.size() - 1).getIdUnidadVenta() + 1;
 
 		UnidadVenta pd = new PuestoDesarmable(id, nombreComercial, responsable, superficie, codigo, estado, cantCarpas, tiempoMontaje);
 
-		return this.lstUnidades.add(pd);
+		return this.lstUnidades.add(pd) && f.getLstUnidadesVenta().add(pd);
 
 	}
 
-	public boolean agregarCajero(String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
+	public boolean agregarCajero(String codigoUnidad , String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
 			String tipo, String turno, boolean estado) throws Exception {
 
 		if(this.traerPersonal(dni) != null) {
 			throw new Exception("Ya hay un Personal registrado con ese DNI. \n");
+		}else if(this.traerUnidad(codigoUnidad) == null) {
+			throw new Exception ("Esta unidad no existe");
 		}
-
+		UnidadVenta u = this.traerUnidad(codigoUnidad);
 		int id = this.lstPersonal.isEmpty() ? 1 : this.lstPersonal.get(this.lstPersonal.size() - 1).getIdPersonal() + 1;
 
 		Personal ca = new Cajero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, turno, estado);
 
-		return this.lstPersonal.add(ca);
+		return this.lstPersonal.add(ca) && u.getLstPersonal().add(ca);
 	}
 
-	public boolean agregarCocinero(String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
+	public boolean agregarCocinero(String codigoUnidad ,String nombre, String apellido, int dni, LocalDate fechaNac, LocalDate fechaIng,
 			String tipo, String especialidadCulinaria, float plusCategoria, boolean estado) throws Exception {
 
 		if(this.traerPersonal(dni) != null) {
 			throw new Exception("Ya hay un Personal registrado con ese DNI. \n");
+		}else if(this.traerUnidad(codigoUnidad) == null) {
+			throw new Exception ("Esta unidad no existe");
 		}
-
+		UnidadVenta u = this.traerUnidad(codigoUnidad);
 		int id = this.lstPersonal.isEmpty() ? 1 : this.lstPersonal.get(this.lstPersonal.size() - 1).getIdPersonal() + 1;
 
 		Personal co = new Cocinero(id, nombre, apellido, dni,fechaNac,fechaIng, tipo, especialidadCulinaria, plusCategoria, estado);
 
-		return this.lstPersonal.add(co);
+		return this.lstPersonal.add(co) && u.getLstPersonal().add(co);
 	}
 
 	public boolean eliminarFestival(String nombre) {
@@ -199,19 +169,6 @@ public class Sistema {
 			i++;
 		}
 		return p;
-	}
-
-	public UnidadVenta traerUnidadPorid(int idUnidadVenta) {
-		UnidadVenta u = null;
-		int i = 0;
-		while(i < this.lstUnidades.size() && u == null) {
-			if(this.lstUnidades.get(i).getIdUnidadVenta() == idUnidadVenta) {
-				u = lstUnidades.get(i);
-			}
-			i++;
-		}
-		return u;   
-
 	}
 
 	public UnidadVenta traerUnidad(String codigo) {
@@ -284,10 +241,12 @@ public class Sistema {
 
 	// CU 4 — Liquidación de Haberes - Punto de entrada del sistema. Usa CU #2 (traerPersonal) para obtener el empleado y delega a liquidarHaberes().
 
-	public float liquidarHaberes(int dni) {
+	public float liquidarHaberes(int dni) throws Exception{
 
 		float sueldo = 0;
-
+		if(this.traerPersonal(dni)== null) {
+			throw new Exception("No existe un personal con este DNI");
+		}
 		sueldo = this.traerPersonal(dni).liquidarHaberes();
 
 		return sueldo;
@@ -297,8 +256,6 @@ public class Sistema {
 	// antes de crear el pedido. Si alguna entidad no existe, retorna false.
 
 	public boolean agregarPedido(LocalDate fecha, String nombreFestival, String codigoUnidad) throws Exception{
-		UnidadVenta u = this.traerUnidad(codigoUnidad);
-
 
 		if(this.traerFestival(nombreFestival) == null || (this.traerUnidad(codigoUnidad) == null)) {
 			throw new Exception("No existe el festival o la unidad ingresada");
@@ -307,19 +264,18 @@ public class Sistema {
 		int id = this.lstPedidos.isEmpty() ? 1 : this.lstPedidos.get(this.lstPedidos.size() - 1).getIdPedido() + 1;
 
 		Pedido nuevo = new Pedido(id, fecha, this.traerFestival(nombreFestival), this.traerUnidad(codigoUnidad));
-		
+
 		List<UnidadVenta> unidadesFest = this.traerFestival(nombreFestival).getLstUnidadesVenta();
 		int i = 0;
 		boolean encontrado = false;
 		while (i < unidadesFest.size() && !encontrado) {
-		    if (unidadesFest.get(i).getCodigo().equalsIgnoreCase(codigoUnidad)) {
-		        unidadesFest.get(i).getLstPedidos().add(nuevo);
-		        encontrado = true;
-		    }
-		    i++;
+			if (unidadesFest.get(i).getCodigo().equalsIgnoreCase(codigoUnidad)) {
+				unidadesFest.get(i).getLstPedidos().add(nuevo);
+				encontrado = true;
+			}
+			i++;
 		}
 		this.lstPedidos.add(nuevo);
-		u.getLstPedidos().add(nuevo);
 		return true;
 	}
 
@@ -364,9 +320,9 @@ public class Sistema {
 	//Calcular la ganancia neta de una unidad: (recaudación total de pedidos − costo de producción de los platos) − sueldos del personal − canon de la unidad.
 
 
-	public float calcularGanancia(int idUnidadVenta) {
+	public float calcularGanancia(String codigo) {
 		float totalNeto = 0;
-		UnidadVenta u = this.traerUnidadPorid(idUnidadVenta);
+		UnidadVenta u = this.traerUnidad(codigo);
 		float canon = this.calcularCanon(u.getCodigo());
 		float recaudacion = 0;
 		float costoProduccion = 0;
@@ -391,9 +347,9 @@ public class Sistema {
 	//CU 9 — Rentabilidad Neta entre dos fechas
 	//Para una unidad dada, calcular la rentabilidad neta considerando únicamente los pedidos dentro del rango de fechas indicado
 
-	public float calcularGananciaFechas(int idUnidadVenta,LocalDate fechaInicio,LocalDate fechaFin) {
+	public float calcularGananciaFechas(String codigo,LocalDate fechaInicio,LocalDate fechaFin) {
 		float totalNeto = 0;
-		UnidadVenta u = this.traerUnidadPorid(idUnidadVenta);
+		UnidadVenta u = this.traerUnidad(codigo);
 		float canon = this.calcularCanon(u.getCodigo());
 		float recaudacion = 0;
 		float costoProduccion = 0;
@@ -456,8 +412,8 @@ public class Sistema {
 	//CU 11 — Plato Estrella
 	//Dado una unidad y un festival, devolver el plato que registró la mayor cantidad de unidades pedidas.
 
-	public Plato traerPlatoEstrella(int idUnidad,String nombreFestival) {
-		UnidadVenta u = this.traerUnidadPorid(idUnidad);
+	public Plato traerPlatoEstrella(String codigo,String nombreFestival) {
+		UnidadVenta u = this.traerUnidad(codigo);
 		Festival f = this.traerFestival(nombreFestival);
 		Plato estrella = null;
 		int maximaCant = 0;
